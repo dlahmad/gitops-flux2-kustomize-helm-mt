@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: testapp  
+  namespace: test
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: testapp
+  template:
+    metadata:
+      labels:
+        app: testapp
+    spec:
+      containers:
+      - name: testapp
+        image: weuaircgitopstestregistry.azurecr.io/testapp:20220601.8
+        ports:
+        - containerPort: 80
+        env:
+        - name: MESSAGE
+          value: "I'm part of the base config."
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: testapp 
+  namespace: test 
+spec:
+  type: ClusterIP
+  ports:
+  - port: 80
+  selector:
+    app: testapp

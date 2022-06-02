@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: testapp  
+  namespace: test
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: testapp
+  template:
+    metadata:
+      labels:
+        app: testapp
+    spec:
+      containers:
+      - name: testapp
+        image: weuaircgitopstestregistry.azurecr.io/testapp:20220602.2
+        env:
+        - name: MESSAGE
+          value: "I'm ACC1 specific!"
